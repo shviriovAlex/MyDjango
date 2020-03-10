@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% for img in image %}
+        <div class="container">
+            <img src="{{img.image.url}}" class="img-fluid" width="90%">
+        </div>
+
+{% endfor %}
+{% endblock %}

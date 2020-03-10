@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+Your name is {{request.user.first_name}}<br>
+Your last name is {{ request.user.last_name}}<br>
+Your nickname is {{request.user.username}}<br>
+You joined us on {{ request.user.date_joined}}<br>
+{% endif %}
+
+{% endblock %}

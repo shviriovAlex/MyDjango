@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load embed_video_tags %}
+
+{% block title %}{{material.title}}{% endblock %}
+
+{% block content %}
+<h1>{{material.title}}</h1>
+{% if material.image %}
+        <div class="container">
+            <img src="{{material.image.url}}" class="img-fluid" width="90%">
+        </div>
+{% endif %}
+
+<p>{{ material.text|linebreaksbr }}</p>
+{% if material.video %}
+<!--загружает видео-->
+{% video material.video as my_video %}
+    {% video my_video %}
+{% endvideo %}
+
+
+{% endif %}
+{% if material.audio %}
+
+<h4>Саундтреки к игре {{material.title}}</h4>
+<table>
+    <tr>
+        <td>
+    <p>{{material.name_audio}}</p>
+        </td>
+
+        <td>
+<audio controls>
+    <source src="{{material.audio.url}}" type="audio/ogg; codecs=vorbis">
+</audio>
+        </td>
+    </tr>
+</table>
+{% endif %}
+    <a href="{{ material.get_absolute_url }}"> К началу страницы </a>
+{% endblock %}
