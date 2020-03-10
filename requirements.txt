@@ -3,4 +3,4 @@ pip install django-embed-video
 pip install django-bootstrap4
 pip install django-crispy-forms
 
--m python  -m pip install Pillow
+pip install Pillow
