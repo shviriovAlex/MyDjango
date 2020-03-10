@@ -18,9 +18,9 @@ class MainPage(models.Model):
     text = models.TextField()
     video = EmbedVideoField(null="True", blank="True", verbose_name="video")
     name_audio = models.CharField(max_length=50, null="True", blank="True")
-    audio = models.FileField(name="audio", default="", upload_to="files/", null="True", blank="True")
+    audio = models.FileField(name="audio", default="", null="True", blank="True")
     objects = models.Manager()
-    image = models.ImageField("Изображение", upload_to="image/", default="")
+    image = models.ImageField("Изображение", default="")
 
     def get_absolute_url(self):
         return reverse('project:material',
