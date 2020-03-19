@@ -29,9 +29,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'project_1.apps.Project1Config',
-    'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -40,7 +39,6 @@ INSTALLED_APPS = [
     'bootstrap4',
     'embed_video',
     'crispy_forms',
-    'registration',
 ]
 
 MIDDLEWARE = [

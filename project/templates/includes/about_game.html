@@ -36,6 +36,12 @@
         </td>
     </tr>
 </table>
+
+<div class="row">
+    {% for song in playlist %}
+        <a href=""><h3></h3></a>
+    {% endfor %}
+</div>
 {% endif %}
     <a href="{{ material.get_absolute_url }}"> К началу страницы </a>
 {% endblock %}
