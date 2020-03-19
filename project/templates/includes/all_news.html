@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    {% for news in news_game %}
+        <h2>
+            <a href="{{ news.get_absolute_url }}">{{ news.title }}</a>
+        </h2>
+        <div class="container">
+            <img src="{{news.image.url}}" class="img-fluid" alt="" width="70%">
+        </div>
+        <p>
+            Published {{ news.publish }} by {{ news.author }}
+        </p>
+        <p>
+            {{ news.body|linebreaks|truncatewords_html:35  }}
+        </p>
+    {% endfor %}
+
+{% endblock %}

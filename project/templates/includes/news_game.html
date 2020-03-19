@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load embed_video_tags %}
+
+{% block title %}{{news.title}}{% endblock %}
+
+{% block content %}
+<h1>{{news.title}}</h1>
+{% if news.image %}
+        <div class="container">
+            <img src="{{news.image.url}}" class="img-fluid" width="90%">
+        </div>
+{% endif %}
+<p> Published by {{news.author}} in {{news.publish}}</p>
+
+<p>{{ news.body|linebreaksbr }}</p>
+{% if news.video %}
+{% endif %}
+{% if news.audio %}
+
+<h4>Саундтреки к игре {{news.title}}</h4>
+<table>
+    <tr>
+        <td>
+    <p>{{news.name_audio}}</p>
+        </td>
+
+        <td>
+<audio controls>
+    <source src="{{news.audio.url}}" type="audio/ogg; codecs=vorbis">
+</audio>
+        </td>
+    </tr>
+</table>
+{% endif %}
+   {% for comment in comments %}
+        <div class="comments" style="padding: 10px;">
+          <p class="font-weight-bold">
+            {{comment.author_comment}}
+            <span class=" text-muted font-weight-normal">
+              {{ comment.created_on }}
+            </span>
+          </p>
+          {{ comment.body | linebreaks }}
+        </div>
+        {% endfor %}
+{% load crispy_forms_tags %}
+<form method="post" style="margin-top: 1.3em;">
+          {{ comment_form | crispy }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-secondary">Отправить</button>
+ </form>
+
+
+    <a href="{{ news.get_absolute_url }}"> К началу страницы </a>
+{% endblock %}

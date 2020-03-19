@@ -10,9 +10,37 @@ class MyModelAdmin(AdminVideoMixin, admin.ModelAdmin):
     pass
 
 
+# admin.site.register(models.Comment)
+
+
+@admin.register(models.NewsGame)
+class MaterialAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', 'status', 'publish', 'video')
+    list_filter = ('status', 'created', 'publish')
+    search_fields = ('title', 'body')  # добавляем поиск
+    prepopulated_fields = {'slug': ('title',)}
+    date_hierarchy = 'publish'
+    ordering = ('status', 'publish')
+
+
+@admin.register(models.Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'body', 'post', 'created_on', 'active')
+    list_filter = ('active', 'created_on')
+    search_fields = ('name', 'email', 'body')
+    actions = ['approve_comments']
+
+    def approve_comments(self, request, queryset):
+        queryset.update(active=True)
+
+
 @admin.register(models.MainPage)
 class MaterialAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'video', 'image')
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('title', 'body')
 
+
+@admin.register(models.Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    pass
