@@ -1,41 +1,21 @@
 {% extends "base.html" %}
-{% load embed_video_tags %}
 
-{% block title %}{{material.title}}{% endblock %}
+{% block title %}{{ lesson.title }}{% endblock %}
 
 {% block content %}
-<h1>{{material.title}}</h1>
-{% if material.image %}
-        <div class="container">
-            <img src="{{material.image.url}}" class="img-fluid" width="90%">
+<a href="{% url 'project:all_games' %}">Вернуться к играм</a>
+    <h1>{{ game.title }}</h1>
+    <p>
+        {% for play in game.materials.all %}
+
+
+                <div class="container">
+    <a href="{{ play.get_absolute_url }}">{{ play.title }}</a>
+                <br>
+            <img src="{{play.image.url}}" class="img-fluid" width="10%">
+    <br>
+                    {{ play.body|linebreaks|truncatewords_html:35 }}
         </div>
-{% endif %}
-
-<p>{{ material.text|linebreaksbr }}</p>
-{% if material.video %}
-<!--загружает видео-->
-{% video material.video as my_video %}
-    {% video my_video %}
-{% endvideo %}
-
-
-{% endif %}
-{% if material.audio %}
-
-<h4>Саундтреки к игре {{material.title}}</h4>
-<table>
-    <tr>
-        <td>
-    <p>{{material.name_audio}}</p>
-        </td>
-
-        <td>
-<audio controls>
-    <source src="{{material.audio.url}}" type="audio/ogg; codecs=vorbis">
-</audio>
-        </td>
-    </tr>
-</table>
-{% endif %}
-    <a href="{{ material.get_absolute_url }}"> К началу страницы </a>
+        {% endfor %}
+    </p>
 {% endblock %}

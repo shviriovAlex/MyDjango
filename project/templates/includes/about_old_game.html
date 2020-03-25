@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load embed_video_tags %}
+
+{% block title %}{{material.title}}{% endblock %}
+
+{% block content %}
+
+{% if games.image %}
+        <div class="container">
+            <h1>{{material.title}}</h1>
+            <img src="{{ games.image.url }}" class="img-fluid" width="90%">
+        </div>
+{% endif %}
+<p>{{ games.body|linebreaksbr }}</p>
+{% if games.video %}
+<!--загружает видео-->
+
+{% video games.video as my_video %}
+<div class="embed-responsive embed-responsive-16by9" style="display: flex; justify-content:center; ">
+
+    {% video my_video %}
+</div>
+{% endvideo %}
+
+
+{% endif %}
+
+    <a href="{{ material.get_absolute_url }}"> К началу страницы </a>
+{% endblock %}
