@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'bootstrap4',
     'embed_video',
     'crispy_forms',
-    'social_django',
 ]
 
 MIDDLEWARE = [
