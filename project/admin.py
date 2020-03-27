@@ -10,7 +10,7 @@ class MyModelAdmin(AdminVideoMixin, admin.ModelAdmin):
     pass
 
 
-# admin.site.register(models.Comment)
+# admin.site.registration(models.Comment)
 
 
 @admin.register(models.NewsGame)
@@ -44,11 +44,6 @@ class MaterialAdmin(admin.ModelAdmin):
 @admin.register(models.Profile)
 class ProfileAdmin(admin.ModelAdmin):
     pass
-
-
-@admin.register(models.Games)
-class ProfileAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('title',)}
 
 
 @admin.register(models.OldGames)

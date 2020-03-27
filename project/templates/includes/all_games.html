@@ -7,8 +7,17 @@
         <h2>
             <a href="{{ game.get_absolute_url }}">{{ game.title }}</a>
         </h2>
-        <p>
-            {{ game.body|linebreaks|truncatewords_html:5 }}
-        </p>
+
+<div class="card" style="width: 26.5rem; background-color: black;">
+      <ul class="list-group list-group-flush" style="background-color: black;">
+        <li class="list-group-item" style="background-color: black;"><h3>{{item.title}}</h3></li>
+
+    </ul>
+    <a href="{{ item.get_absolute_url }}" class="card-link">  <img class="card-img-top" src="{{game.image.url}}" alt="Card image cap"></a>
+
+  <div class="card-body" style="background-color: black;">
+    <p>{{ game.notes|linebreaks|truncatewords_html:40 }}</p>
+  </div>
+
     {% endfor %}
 {% endblock %}

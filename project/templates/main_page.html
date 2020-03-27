@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-
             <form class="form-inline my-2 my-lg-0" method="GET" action="">
       <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" name="q">
       <button class="btn btn-outline-secondary" type="button">Поиск</button>
     </form>
+
 <div class="images" style="display: flex; flex-wrap: wrap; align-content:flex-end; ">
     {% for item in base %}
 <div class="card" style="width: 26.5rem; background-color: black;">
@@ -15,6 +15,10 @@
 
   <div class="card-body" style="background-color: black;">
     <a href="{{ item.get_absolute_url }}" class="card-link">О игре</a>
+        <h2>
+            <a href="{{ games.get_absolute_url }}">{{ game.title }}</a>
+        </h2>
+      {{ item.material.title }}
   </div>
 </div>
 
@@ -22,5 +26,10 @@
 <hr class="my-4" style="background-color: #00008b;">
     {% endfor %}
 </div>
+    {% for game in games %}
+        <h2>
+            <a href="{{ game.get_absolute_url }}">{{ game.title }}</a>
+        </h2>
+{% endfor %}
 
 {% endblock %}

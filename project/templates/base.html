@@ -9,6 +9,7 @@
 </head>
 <body>
     <nav class="navbar navbar-dark bg-dark fixed-top">
+
   <a class="navbar-brand" href="{% url 'project:main_page' %}">
     <img src="/static/image_static/dualshock.jpg" width="30 px" height="30 px"  class="d-inline-block align-top" alt="">
     PlayGames
@@ -25,14 +26,11 @@
     {% else %}
       <a class="navbar-brand" href="{% url 'project:login' %}">Войти</a>
     {% endif %}
-            <a class="navbar-brand" href="{% url 'project:register' %}">
+            <a class="navbar-brand" href="{% url 'project:registration' %}">
         Регистрация
   </a>
         <a class="navbar-brand"  href="{% url 'project:all_news' %}">
         Новости
-  </a>
-        <a class="navbar-brand"  href="{% url 'project:all_games' %}">
-        Все игры
   </a>
 
         </div>

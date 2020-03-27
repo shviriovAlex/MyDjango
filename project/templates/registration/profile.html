@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}profile screen {% endblock %}
+{% block content %}
+<h5>{{request.user.username}}</h5>
+<p>Your birthday: {{ user.profile.birth }} </p>
+<p>Your name: {{ user.first_name|add:user.last_name }}</p>
+<p>You join us: {{ user.profile.join_date }} </p>
+<p><img src="{{ user.photo.url }}" width="7%" height="10%" alt="alttext"></p>
+
+{% endblock %}

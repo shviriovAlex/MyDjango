@@ -32,6 +32,21 @@
     </tr>
 </table>
 {% endif %}
+{{ news.total_likes }} like{{ total_likes|pluralize }}
+{% if request.user.is_authenticated %}
+
+<img src="/static/image_static/25297.png" name="post_id" width="30 px" height="30 px"  value="{{ news.id }}"  class="d-inline-block align-top" alt="">
+
+<form action="{% url 'project:like_post' %}" method="post">
+    {% csrf_token %}
+    {% if is_liked %}
+    <button type="submit" name="post_id" value="{{ news.id }}" class="btn btn-primary"><img src="/static/image_static/shiok_dis.jpg" width="25 px" height="18 px" ></button>
+
+        {% else %}
+     <button type="submit" name="post_id" value="{{ news.id }}" class="btn btn-primary"><img src="/static/image_static/shiok.jpg" width="25 px" height="18 px" ></button>
+    {% endif %}
+{% endif %}
+</form>
    {% for comment in comments %}
         <div class="comments" style="padding: 10px;">
           <p class="font-weight-bold">
@@ -52,4 +67,6 @@
 
 
     <a href="{{ news.get_absolute_url }}"> К началу страницы </a>
+|
+    <a href="{% url 'project:all_news' %}"> К новостям </a>
 {% endblock %}

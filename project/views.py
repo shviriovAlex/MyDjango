@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import CommentForm
 from django.views.generic import TemplateView, ListView, RedirectView
@@ -8,7 +7,7 @@ from . import forms
 from django.contrib.auth.models import User, auth
 from . import models
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 def main_page(request):
@@ -28,26 +27,9 @@ def about_new_game(request, year, month, day, slug):
                                  publish__month=month,
                                  publish__day=day,
                                  )
-
     return render(request,
                   'includes/about_new_game.html',
                   {'material': material})
-
-
-def all_games(request):
-    games = models.Games.objects.all()
-    return render(request,
-                  'includes/all_games.html',
-                  {"games": games})
-
-
-def about_game(request, slug):
-    game = get_object_or_404(models.Games, slug=slug)
-    games = models.Games.objects.all()
-    return render(request,
-                  'includes/about_game.html',
-                  {'game': game,
-                   'games': games})
 
 
 def about_old_game(request, year, day, slug):
@@ -75,6 +57,9 @@ def about_news(request, year, month, slug):
                              publish__year=year,
                              publish__month=month,
                              )
+    is_liked = False
+    if news.likes.filter(id=request.user.id).exists():
+        is_liked = True
     comments = news.comments.filter(active=True)
     new_comment = None
     if request.method == 'POST':
@@ -92,7 +77,22 @@ def about_news(request, year, month, slug):
                   {'news': news,
                    'comments': comments,
                    'new_comment': new_comment,
-                   'comment_form': comment_form})
+                   'comment_form': comment_form,
+                   'is_liked': is_liked,
+                   'total_likes': news.total_likes()},
+                  )
+
+
+def like_post(request):
+    post = get_object_or_404(models.NewsGame, id=request.POST.get('post_id'))
+    is_liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        is_liked = False
+    else:
+        post.likes.add(request.user)
+        is_liked = True
+    return HttpResponseRedirect(post.get_absolute_url())
 
 
 def user_page(request):
@@ -102,26 +102,9 @@ def user_page(request):
                   {"user": user_now})
 
 
-def create_form(request):
-    if request.method == 'POST':
-        material_form = forms.MaterialForm(request.POST)
-        if material_form.is_valid():
-            new_material = material_form.save(commit=False)
-            new_material.author = User.objects.first()
-            new_material.slug = new_material.title.replace(" ", "-")
-            new_material.save()
-            return render(request,
-                          'material/detail.html',
-                          {'material': new_material})
-    else:
-        material_form = forms.MaterialForm()
-    return render(request, "material/create_material.html",
-                  {'form': material_form})
-
-
 @login_required
 def view_profile(request):
-    return render(request, 'includes/profile.html', {'user': request.user})
+    return render(request, 'registration/profile.html', {'user': request.user})
 
 
 def user_login(request):
@@ -149,7 +132,7 @@ def user_login(request):
 
 def user_logout(request):
     return render(request,
-                  'register/logged_out.html')
+                  'logout.html')
 
 
 def register(request):
@@ -160,7 +143,7 @@ def register(request):
         password2 = request.POST['password2']
         email = request.POST['email']
 
-        if password1 == password2:
+        if password1 == password2 and len(password1) != 0:
             if User.objects.filter(username=username).exists():
                 print('Username taken')
             elif User.objects.filter(email=email).exists():
@@ -175,6 +158,6 @@ def register(request):
 
         else:
             print('password not matching')
-        return redirect('/')
+        return redirect('/registration/')
     else:
         return render(request, 'registration.html')

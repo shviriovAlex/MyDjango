@@ -12,6 +12,29 @@ class ObjectsWithScoresManager(object):
     pass
 
 
+class OldGames(models.Model):
+    title = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=250,
+                            default="")
+    created = models.DateField(blank=True, null=True)
+    body = models.TextField()
+    image = models.ImageField("Изображение", upload_to="media/")
+    image2 = models.ImageField("Изображение1", upload_to="media/", null="True", blank="True")
+    image3 = models.ImageField("Изображение2", upload_to="media/", null="True", blank="True")
+    video = EmbedVideoField(null="True", blank="True", verbose_name="video")
+    publish = models.DateTimeField(default=timezone.now)
+
+    def get_absolute_url(self):
+        return reverse('project:about_old_game',
+                       args=[self.publish.year,
+                             self.publish.day,
+                             self.slug])
+
+    def __str__(self):
+        return self.title
+
+
+
 class MainPage(models.Model):
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250,
@@ -23,6 +46,8 @@ class MainPage(models.Model):
     audio = models.FileField(name="audio", default="", upload_to="files/", null="True", blank="True")
     objects = models.Manager()
     image = models.ImageField("Изображение", upload_to="media/", default="")
+    material = models.ManyToManyField(OldGames,
+                                      related_name='game')
 
     def get_absolute_url(self):
         return reverse('project:material',
@@ -51,7 +76,7 @@ class NewsGame(models.Model):
     slug = models.SlugField(max_length=250,
                             unique_for_date='publish')
     body = models.TextField()
-
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
     publish = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -72,6 +97,9 @@ class NewsGame(models.Model):
                            self.publish.month,
                            self.publish.year,
                            self.slug])
+
+    def total_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return self.title
@@ -107,44 +135,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return 'Comment {} by {}'.format(self.body, self.name)
-
-
-class OldGames(models.Model):
-    title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250,
-                            default="")
-    created = models.DateField(blank=True, null=True)
-    body = models.TextField()
-    image = models.ImageField("Изображение", upload_to="media/")
-    image2 = models.ImageField("Изображение1", upload_to="media/", null="True", blank="True")
-    image3 = models.ImageField("Изображение2", upload_to="media/", null="True", blank="True")
-    video = EmbedVideoField(null="True", blank="True", verbose_name="video")
-    publish = models.DateTimeField(default=timezone.now)
-
-    def get_absolute_url(self):
-        return reverse('project:about_old_game',
-                       args=[self.publish.year,
-                             self.publish.day,
-                             self.slug])
-
-    def __str__(self):
-        return self.title
-
-
-class Games(models.Model):
-    title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250,
-                            unique=True)
-
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
-    materials = models.ManyToManyField(OldGames,
-                                       related_name='games')
-    notes = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse('project:about_game',
-                       args=[self.slug])

@@ -2,7 +2,7 @@
 Website with blog
 
 
-Website have some information about future games on PS 4 with:
+Website have some information about games, series of this same game and news from game industry with:
 
 -images
 
@@ -12,8 +12,12 @@ Website have some information about future games on PS 4 with:
 
 -text
 
+-likes
+
 Add comments in news
 
 Add search on main page
 
 Add registration
+
+Add likes
