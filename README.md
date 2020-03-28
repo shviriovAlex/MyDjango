@@ -16,8 +16,12 @@ Website have some information about games, series of this same game and news fro
 
 Add comments in news
 
+Add likes in news
+
 Add search on main page
 
 Add registration
 
-Add likes
+Add log-in through Github and Google+
+
+

@@ -104,7 +104,8 @@ def user_page(request):
 
 @login_required
 def view_profile(request):
-    return render(request, 'registration/profile.html', {'user': request.user})
+    return render(request, 'registration/profile.html',
+                  {'user': request.user})
 
 
 def user_login(request):

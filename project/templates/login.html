@@ -7,9 +7,14 @@
 <form action="." method="post">
     {{ form.as_p }}
     {% csrf_token %}
-    <p><input type="submit" value="log-in"></p>
+    <button type="submit" class="btn btn-outline-secondary">Log-in</button>
     </form>
-
+<a href="{% url 'social:begin' 'github' %}">
+    <button type="button" class="btn btn-primary">Github</button>
+</a>
+<a href="{% url 'social:begin' 'google-oauth2' %}">
+    <button type="button" class="btn btn-danger">Google+</button>
+</a>
 
 
 {% endblock %}

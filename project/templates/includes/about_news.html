@@ -35,7 +35,6 @@
 {{ news.total_likes }} like{{ total_likes|pluralize }}
 {% if request.user.is_authenticated %}
 
-<img src="/static/image_static/25297.png" name="post_id" width="30 px" height="30 px"  value="{{ news.id }}"  class="d-inline-block align-top" alt="">
 
 <form action="{% url 'project:like_post' %}" method="post">
     {% csrf_token %}
@@ -48,9 +47,10 @@
 {% endif %}
 </form>
    {% for comment in comments %}
+
         <div class="comments" style="padding: 10px;">
           <p class="font-weight-bold">
-            {{comment.author_comment}}
+            {{comment.name}}
             <span class=" text-muted font-weight-normal">
               {{ comment.created_on }}
             </span>
@@ -62,7 +62,7 @@
 <form method="post" style="margin-top: 1.3em;">
           {{ comment_form | crispy }}
           {% csrf_token %}
-          <button type="submit" class="btn btn-outline-secondary">Отправить</button>
+          <button type="submit" class="btn btn-outline-secondary">Send</button>
  </form>
 
 
