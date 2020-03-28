@@ -4,7 +4,81 @@
 {% block title %}{{material.title}}{% endblock %}
 
 {% block content %}
-<h1>{{material.title}}</h1>
+{% if material.material.all %}
+    <div class="container-flex m-4">
+        <div class="row mb-1">
+            <div class="col-sm-9 pr-sm-1 pl-sm-0">
+                <div class="p-1 border-right-black">
+{% if material.image %}
+        <div class="container">
+            <h1>{{material.title}}</h1>
+            <img src="{{material.image.url}}" class="img-fluid" width="90%">
+        </div>
+{% endif %}
+
+<p>{{ material.text|linebreaksbr }}</p>
+{% if material.video %}
+<!--загружает видео-->
+
+{% video material.video as my_video %}
+<div class="embed-responsive embed-responsive-16by9" style="display: flex; justify-content:center; ">
+
+    {% video my_video %}
+</div>
+{% endvideo %}
+
+
+{% endif %}
+{% if material.audio %}
+
+<h4>Саундтреки к игре {{material.title}}</h4>
+<table>
+    <tr>
+        <td>
+    <p>{{material.name_audio}}</p>
+        </td>
+
+        <td>
+<audio controls>
+    <source src="{{material.audio.url}}" type="audio/ogg; codecs=vorbis">
+</audio>
+        </td>
+    </tr>
+</table>
+
+<div class="row">
+    {% for song in playlist %}
+        <a href=""><h3></h3></a>
+    {% endfor %}
+</div>
+
+{% endif %}
+    {% for game in materials %}
+        <h2>
+            <a href="{{ game.get_absolute_url }}">{{ game.title }}</a>
+        </h2>
+{% endfor %}
+                </div>
+            </div>
+<div class="col-sm-3 border-left">
+        {% for play in material.material.all %}
+
+<div class="card" style="width: 15.5rem; background-color: black;">
+      <ul class="list-group list-group-flush" style="background-color: black;">
+        <li class="list-group-item" style="background-color: black;"><h3><a href="{{ play.get_absolute_url }}">{{ play.title }}</a></h3></li>
+
+    </ul>
+    <a href="{{ play.get_absolute_url }}" class="card-link">  <img class="card-img-top" src="{{play.image.url}}"  alt="Card image cap"></a>
+
+  <div class="card-body" style="background-color: black;">
+    <p>{{ play.body|linebreaks|truncatewords_html:20 }}</p>
+  </div>
+</div>
+    {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <h1>{{material.title}}</h1>
 {% if material.image %}
         <div class="container">
             <img src="{{material.image.url}}" class="img-fluid" width="90%">
@@ -53,20 +127,7 @@
             <a href="{{ game.get_absolute_url }}">{{ game.title }}</a>
         </h2>
 {% endfor %}
+{% endif %}
 
-        {% for play in material.material.all %}
-
-<div class="card" style="width: 26.5rem; background-color: black;">
-      <ul class="list-group list-group-flush" style="background-color: black;">
-        <li class="list-group-item" style="background-color: black;"><h3><a href="{{ play.get_absolute_url }}">{{ play.title }}</a></h3></li>
-
-    </ul>
-    <a href="{{ play.get_absolute_url }}" class="card-link">  <img class="card-img-top" src="{{play.image.url}}" alt="Card image cap"></a>
-
-  <div class="card-body" style="background-color: black;">
-    <p>{{ play.body|linebreaks|truncatewords_html:40 }}</p>
-  </div>
-</div>
-    {% endfor %}
     <a href="{{ material.get_absolute_url }}"> К началу страницы </a>
 {% endblock %}

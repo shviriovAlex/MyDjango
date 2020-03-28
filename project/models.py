@@ -34,7 +34,6 @@ class OldGames(models.Model):
         return self.title
 
 
-
 class MainPage(models.Model):
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250,
@@ -48,6 +47,7 @@ class MainPage(models.Model):
     image = models.ImageField("Изображение", upload_to="media/", default="")
     material = models.ManyToManyField(OldGames,
                                       related_name='game')
+    release_date = models.DateField(blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('project:material',
