@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+Привет {{request.user.username}}!
+Вы можете войти: <a href="{% url 'project:login' %}">Войти</a>
+
+{% endblock %}

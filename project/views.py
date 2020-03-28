@@ -154,11 +154,16 @@ def register(request):
                                                 password=password1,
                                                 first_name=first_name,
                                                 email=email, )
-                user.save()
+                new_user = user.save()
                 print('user created')
+                return render(request, 'register_done.html', {'new_user': new_user})
 
         else:
             print('password not matching')
         return redirect('/registration/')
     else:
         return render(request, 'registration.html')
+
+
+def register_done(request):
+    return render(request, 'register_done.html')

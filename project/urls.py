@@ -15,7 +15,7 @@ urlpatterns = [
          views.about_news,
          name='about_news'),
     path('like/', views.like_post, name="like_post"),
-
+    path('register_done/', views.register_done, name="register_done"),
 
     path('about_old_game/<int:year>/<int:day>/<slug:slug>/', views.about_old_game, name='about_old_game'),
     path('login/', au_views.LoginView.as_view(template_name='login.html'), name='login'),
