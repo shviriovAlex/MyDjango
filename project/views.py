@@ -10,9 +10,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 def main_page(request):
     main = models.MainPage.objects.all()
-    query = request.GET.get("q")
+    query = request.GET.get("query", '')
     if query:
         main = main.filter(title__icontains=query)
+    else:
+        main = main
     return render(request,
                   'main_page.html',
                   {"base": main})
@@ -101,7 +103,7 @@ def user_page(request):
 
 @login_required
 def view_profile(request):
-    return render(request, 'registration/profile.html',
+    return render(request, 'includes/profile.html',
                   {'user': request.user})
 
 

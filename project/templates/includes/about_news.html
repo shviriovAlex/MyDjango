@@ -67,7 +67,7 @@
           <button type="submit" class="btn btn-outline-secondary">Send</button>
  </form>
 {% else %}
-<p>Что бы оставлять комментарии нажмите: <a href="{% url 'project:login' %}">войти</a> или <a href="{% url 'project:registration' %}">зарегестрироваться</a></p>
+<p>Что бы оставлять комментарии нажмите <a href="{% url 'project:login' %}">войти</a> или <a href="{% url 'project:registration' %}">зарегестрироваться</a></p>
 {% endif %}
 
     <a href="{{ news.get_absolute_url }}"> К началу страницы </a>

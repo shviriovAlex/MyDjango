@@ -37,7 +37,7 @@
         <td>
     <p>{{material.name_audio}}</p>
         </td>
-
+        <td>&ensp;&ensp;</td>
         <td>
 <audio controls>
     <source src="{{material.audio.url}}" type="audio/ogg; codecs=vorbis">
@@ -46,11 +46,7 @@
     </tr>
 </table>
 
-<div class="row">
-    {% for song in playlist %}
-        <a href=""><h3></h3></a>
-    {% endfor %}
-</div>
+
 
 {% endif %}
     {% for game in materials %}
@@ -61,6 +57,7 @@
                 </div>
             </div>
 <div class="col-sm-3 border-left">
+    <h5>Из этой серии</h5>
         {% for play in material.material.all %}
 
 <div class="card" style="width: 15.5rem; background-color: black;">
@@ -106,8 +103,7 @@
         <td>
     <p>{{material.name_audio}}</p>
         </td>
-<tr>
-</tr>>
+        <td>&ensp;&ensp;</td>
         <td>
 <audio controls>
     <source src="{{material.audio.url}}" type="audio/ogg; codecs=vorbis">
@@ -115,12 +111,6 @@
         </td>
     </tr>
 </table>
-
-<div class="row">
-    {% for song in playlist %}
-        <a href=""><h3></h3></a>
-    {% endfor %}
-</div>
 
 {% endif %}
     {% for game in materials %}
@@ -130,5 +120,5 @@
 {% endfor %}
 {% endif %}
 
-    <a href="{{ material.get_absolute_url }}"> К началу страницы </a>
+        <a href="{{ material.get_absolute_url }}"> К началу страницы </a> | <a href = "{% url 'project:main_page' %}">К играм</a>
 {% endblock %}
