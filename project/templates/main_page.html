@@ -9,9 +9,10 @@
     {% for item in base %}
 <div class="card" style="width: 26.5rem; background-color: black;">
       <ul class="list-group list-group-flush" style="background-color: black;">
+          <a href="{{ item.get_absolute_url }}" class="card-link">
         <li class="list-group-item" style="background-color: black;"><h3>{{item.title}}</h3></li>
     </ul>
-    <a href="{{ item.get_absolute_url }}" class="card-link">  <img class="card-img-top" src="{{item.image.url}}" alt="Card image cap"></a>
+    <img class="card-img-top" src="{{item.image.url}}" alt="Card image cap"></a>
 
   <div class="card-body" style="background-color: black;">
         <h2>

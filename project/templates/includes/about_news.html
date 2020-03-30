@@ -50,7 +50,7 @@
 
         <div class="comments" style="padding: 10px;">
           <p class="font-weight-bold">
-            {{comment.name}}
+            {{comment.author_comment}}
             <span class=" text-muted font-weight-normal">
               {{ comment.created_on }}
             </span>
@@ -58,13 +58,17 @@
           {{ comment.body | linebreaks }}
         </div>
         {% endfor %}
+{% if request.user.is_authenticated %}
 {% load crispy_forms_tags %}
 <form method="post" style="margin-top: 1.3em;">
           {{ comment_form | crispy }}
           {% csrf_token %}
+    {{ form.as_p }}
           <button type="submit" class="btn btn-outline-secondary">Send</button>
  </form>
-
+{% else %}
+<p>Что бы оставлять комментарии нажмите: <a href="{% url 'project:login' %}">войти</a> или <a href="{% url 'project:registration' %}">зарегестрироваться</a></p>
+{% endif %}
 
     <a href="{{ news.get_absolute_url }}"> К началу страницы </a>
 |

@@ -2,14 +2,12 @@
 body{
     background-color: black;
     color: white;
-    border-right-color: black;
-    border-right-style: groove;
-    border-right-width: 3px;
-    border-left-color: black;
-    border-left-style: groove;
-    border-left-width: 3px;
+
     padding: 20px 20px;
     margin: 0px 100px;
     margin-top: 50px;
 
+}
+a {
+    color: white;
 }

@@ -1,10 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import CommentForm
-from django.views.generic import TemplateView, ListView, RedirectView
 from . import forms
-from django.contrib.auth.models import User, auth
+from django.contrib.auth.models import User
 from . import models
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseRedirect
@@ -61,14 +59,15 @@ def about_news(request, year, month, slug):
     if news.likes.filter(id=request.user.id).exists():
         is_liked = True
     comments = news.comments.filter(active=True)
-    new_comment = None
+    new_comment = True
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
-            new_comment.post = all_news
+            new_comment.author_comment = request.user
+            new_comment.post = news
             new_comment.save()
-        return redirect(all_news)
+        return redirect(news)
     else:
         comment_form = CommentForm()
 
@@ -85,13 +84,11 @@ def about_news(request, year, month, slug):
 
 def like_post(request):
     post = get_object_or_404(models.NewsGame, id=request.POST.get('post_id'))
-    is_liked = False
+
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
-        is_liked = False
     else:
         post.likes.add(request.user)
-        is_liked = True
     return HttpResponseRedirect(post.get_absolute_url())
 
 

@@ -10,9 +10,6 @@ class MyModelAdmin(AdminVideoMixin, admin.ModelAdmin):
     pass
 
 
-# admin.site.registration(models.Comment)
-
-
 @admin.register(models.NewsGame)
 class MaterialAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'status', 'publish', 'video')
